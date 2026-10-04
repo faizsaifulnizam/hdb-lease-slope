@@ -2,6 +2,7 @@
 import csv
 import json
 import math
+import shutil
 from datetime import datetime,timedelta,timezone
 from pathlib import Path
 import matplotlib
@@ -52,6 +53,16 @@ def frame(fig,title,subtitle,source,footer):
     fig.text(.035,1-115/h,subtitle,fontsize=9,ha='left',va='top')
     fig.text(.035,45/h,source,fontsize=8,ha='left',va='bottom')
     fig.text(.035,80/h,footer,fontsize=8,ha='left',va='bottom')
+
+
+def publish_figures(pairs):
+    pairs=list(pairs)
+    mirror=ROOT/'docs/img';mirror.mkdir(parents=True,exist_ok=True)
+    for src,dst in list(pairs):
+        staged=mirror/(dst.name+'.part')
+        shutil.copyfile(src,staged)
+        pairs.append((staged,mirror/dst.name))
+    publish_paths(pairs)
 
 
 def main():
@@ -118,7 +129,7 @@ def main():
         bg='#14293D' if dark else '#FBFBF9';ink='#E7E3DC' if dark else '#14293D'
         banner=f'''<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-labelledby="title desc"><title id="title">HDB lease slopes, stratified</title><desc id="desc">Same town, flat type and year. Cross-sectional associations, not individual-flat decay.</desc><rect width="1280" height="320" fill="{bg}"/><path d="M64 64H1216" stroke="{petrol}" stroke-width="4"/><text x="64" y="142" font-family="Source Serif 4,Georgia,serif" font-size="48" fill="{ink}">A lease slope is not a decay forecast</text><text x="64" y="193" font-family="Inter,Arial,sans-serif" font-size="23" fill="{muted}">Same town. Same flat type. Same year. Different remaining leases.</text><text x="64" y="251" font-family="Inter,Arial,sans-serif" font-size="20" fill="{petrol}">HDB LEASE SLOPE · DESCRIPTIVE ONLY</text><text x="1216" y="270" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="16" fill="{muted}">Singapore public data · 6 of 6</text></svg>'''
         p=ROOT/'assets'/('banner'+suffix+'.svg.part');p.write_text(banner,encoding='utf-8');pairs.append((p,ROOT/'assets'/('banner'+suffix+'.svg')))
-    publish_paths(pairs)
+    publish_figures(pairs)
     print('FIGURES/BANNERS VALIDATED',len(pairs),'partial regression identity PASS')
 
 if __name__=='__main__': main()
