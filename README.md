@@ -100,8 +100,11 @@ Python **3.12.10**, DuckDB 1.5.6, NumPy 2.5.3, matplotlib 3.11.2; bundled series
 
 ```bash
 uv venv --python 3.12.10
-# Windows Git Bash: source .venv/Scripts/activate
-# Linux/macOS: source .venv/bin/activate
+if [ -f .venv/Scripts/activate ]; then
+  source .venv/Scripts/activate
+else
+  source .venv/bin/activate
+fi
 uv pip install -r requirements.txt
 python src/download.py
 python src/build_dataset.py

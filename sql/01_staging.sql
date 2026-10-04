@@ -6,7 +6,7 @@ SELECT *, CASE WHEN regexp_full_match(month,'[0-9]{4}-(0[1-9]|1[0-2])')
        try_cast(floor_area_sqm AS DOUBLE) AS area,
        CASE WHEN regexp_full_match(lease_commence_date,'[0-9]{4}')
             THEN try_cast(lease_commence_date AS INTEGER) END AS commence_year,
-       CASE WHEN regexp_full_match(remaining_lease,'[0-9]+ years?( [0-9]+ months?)?')
+       CASE WHEN regexp_full_match(remaining_lease,'[0-9]{1,2} years?( [0-9]{1,2} months?)?')
                  AND coalesce(try_cast(nullif(regexp_extract(remaining_lease,' ([0-9]+) months?',1),'') AS INTEGER),0)<12
                  AND try_cast(regexp_extract(remaining_lease,'^([0-9]+)',1) AS INTEGER)*12
                      +coalesce(try_cast(nullif(regexp_extract(remaining_lease,' ([0-9]+) months?',1),'') AS INTEGER),0) BETWEEN 1 AND 1188
