@@ -1,0 +1,42 @@
+{
+  "match": true,
+  "count": 20,
+  "commands": [
+    "src/download.py",
+    "src/build_dataset.py",
+    "src/analysis.py",
+    "src/figures.py",
+    "-m unittest discover -s tests -p 'test_*.py' -v",
+    "tests/smoke_test.py",
+    "src/verify.py"
+  ],
+  "head": "2359e7812114e4d6aa18ae2d73acfd9fe3f7dbd5",
+  "environment": {
+    "python": "D:/Data Portfolio/repos/card-book-quality/.venv/Scripts/python.exe",
+    "dependency_setup": "Reuse installed pinned environment; no uv/pip installation replay"
+  },
+  "input_sha256": "9835dfe6cd92a46a1302fabf3a692bf893ee5b86ec95638d10dfce61dbfbdb9a",
+  "artifacts": {
+    "assets/banner-dark.svg": "5b782d516a5eaa8e656fab787b95348a88c9843a67506de7bb6a8177b70285ab",
+    "assets/banner.svg": "78fef21ef8f269a5dd0f6513b7d402e5a82d077e2d04044eeb478e9410b26ce3",
+    "outputs/bucket_medians.csv": "838459ad9964d40968c1db4497de05d28b93c2619d8bb32dd1ef9cacb0366a36",
+    "outputs/bucket_medians_all.csv": "3be6bedfd90f67e9ee908aa64baa1fe6391628cb3d5f96a7d09946de05d862e1",
+    "outputs/bucket_sensitivity.csv": "6fc51dc83e54744e86de291223e7137ee94166ba7bc3791865735b9dec04a042",
+    "outputs/excluded_rows.csv": "cd0b0e11f5cdb9f1530acce099455e9ac2b543400f3a3473657e2415b0a1a91e",
+    "outputs/exclusions.csv": "2ebb6490488c1b18e271a62512b74ce3cf83e7fc4f65fcb04f55fc6df6027886",
+    "outputs/featured_segments.csv": "f95435843688556648f169ea7e715a3e036862f997b1c365e4c3ce126757976e",
+    "outputs/group_summaries.csv": "29601cd706617365c1bdc2b9c87c17e156a9ee9759db5d3715a77d4198c0d504",
+    "outputs/model_exclusions.csv": "a884609f87c368dbfa23a41d2934755143899a97e585b24303bd7fd0c208cc14",
+    "outputs/segment_profile.csv": "17cac9028d6f8f8944988641630a9a88d594c15eb367ad2f4f2576182e9555b2",
+    "outputs/sensitivity.csv": "e79928bdb3d303a77f7d9abb430204ce0fca82a79bada587d1a68c80147c9bbf",
+    "outputs/slopes.csv": "3cab710710e25ca498da2f375b5e64e5f53a41e278f38118b7219df8397c4b32",
+    "outputs/town_groups.csv": "5b24ad07409a7579d8cbd16d9a6d34d9b882b67dfa2c16037f0fed650f50c9f2",
+    "reports/figures/f1_buckets-dark.png": "3514999516c066b7f65be80fc34b49debbbc1dd8ab6fe5356de9c270899d20dc",
+    "reports/figures/f1_buckets.png": "da814ef064b067305810fd6974d5f698a0d8aa2b9aae28614f4a1404260c91ad",
+    "reports/figures/f2_slopes-dark.png": "f410d94a6861c9f1cdbf2b8e555006f34f0b469e7b81fa62f01380c9ca8e3128",
+    "reports/figures/f2_slopes.png": "c798305aa2d3c797928ccee7b68e03571ce72f79fbf91d8ebcc8e48c4ef9e97a",
+    "reports/figures/f3_exemplar-dark.png": "2213f1a0cb0b338a77db7d61d3479e422db46be6bc05bc351a95471a3583617b",
+    "reports/figures/f3_exemplar.png": "6a04f425418eaa625f4bc4f6ee0baf85d2dc47c6a7f9ef864e35249a81ba85ee"
+  },
+  "coverage": "Same pinned installed environment. Independently downloaded live source; seven README Python commands. uv/pip setup not replayed. Snapshot retrieval timestamp excluded."
+}

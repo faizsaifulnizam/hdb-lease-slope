@@ -1,0 +1,7 @@
+*.csv text eol=lf
+*.py text eol=lf
+*.sql text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.png -text
+*.ttf -text

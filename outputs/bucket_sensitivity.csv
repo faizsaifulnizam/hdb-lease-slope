@@ -1,0 +1,4 @@
+sale_year,min_bucket_n,retained_buckets,suppressed_buckets,retained_transactions,suppressed_transactions
+2025,20,308,331,22518,2566
+2025,30,235,404,20766,4318
+2025,50,159,480,17887,7197

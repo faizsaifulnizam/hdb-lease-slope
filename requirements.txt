@@ -1,0 +1,4 @@
+# Python 3.12.10; installed compatible series versions, no new dependency classes
+ duckdb==1.5.6
+ numpy==2.5.3
+ matplotlib==3.11.2

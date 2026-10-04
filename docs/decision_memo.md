@@ -1,0 +1,15 @@
+# Decision memo — a lease association, not an individual-flat decay rate
+
+**Question.** Within a town and flat type, is a shorter remaining lease associated with lower price/m², and does this differ between historical mature and non-mature groups?
+
+**Answer.** In 2025, 61 of 62 eligible town × type coefficients are positive. Unweighted median price/m² associations per extra lease year are **+1.20%** in the historical mature group (29 cells) and **+0.69%** in the historical non-mature group (33). These are between-flat associations controlling for storey midpoint, area and registration-month indicators, not measured depreciation. Like-for-like 4-room results are **+1.20% versus +0.67%** (12 versus 11 towns). Group distributions overlap; we do not claim a tested group effect.
+
+**Primary view.** 2025 five-year band medians within town × type keep cross-year inflation out. Sengkang 4-room has medians S$6,112.86/m² (70–<75 lease years, n=152), S$8,602.15 (80–<85, n=115), then S$7,236.56 (90–<95, n=203). The non-monotonic shape is a reason not to promise a single decay curve. The controlled Sengkang slope is +0.782% per extra lease year (approximate HC3 interval +0.710% to +0.854%), over 72.17–95.25 years, n=940. It summarizes that observed support; it is not a forecast for one flat.
+
+**Rules.** Latest complete year is 2025; 2026 is partial. Display buckets need n≥30. Model cells need n≥100, ≥10-year support, six observed months, full rank, residual df≥30 and ≥0.5 years of lease variation after controls. Retained raw population is 241,919 of 241,920; one −179-month inconsistency is withheld, not rewritten. Annual retained population is 25,084; model sample is 22,048. Historical grouping is fixed to HDB's 20 August 2023 Annex A, not Standard/Plus/Prime.
+
+**Robustness.** Threshold/support and 2024 variants keep the ordering of group medians. Four-room restrictions reduce flat-type composition differences. A stricter lease-consistency screen gives about +1.20%/+0.69% overall and +1.20%/+0.67% for four-room. Medians across segments are unweighted; this answers a typical eligible-segment question, not a typical national-transaction question. The 404 thin display buckets are counted separately from 67 withheld model cells.
+
+**What this file cannot say.** A shorter lease causes the quoted price reduction, an individual flat will lose that amount annually, or the historical grouping itself explains prices. Micro-location/block vintage, flat model, condition, renovation, buyer characteristics and cohort selection remain omitted. The public file lacks unique unit/transaction identifiers. HC3 intervals do not account for within-block dependence, model misspecification or confounding. They are descriptive uncertainty only; no price estimator or causal/policy advice is offered.
+
+**Decision for review.** Keep the primary binned medians visible beside controlled summaries. Approve the thresholds, wide tolerance, historical grouping and association-only wording at Faiz's gate; publication is a separate decision. [Outputs](../outputs/group_summaries.csv) · [Audit](data_audit.md) · [Sensitivity](sensitivity.md).
