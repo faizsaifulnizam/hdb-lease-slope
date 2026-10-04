@@ -1,4 +1,4 @@
-"""Stdlib-only committed-artifact smoke: CI does not pretend to rerun live analysis."""
+"""Stdlib-only artifact smoke; the separate live-refit CI job reruns analysis."""
 import csv,json,math,statistics
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]

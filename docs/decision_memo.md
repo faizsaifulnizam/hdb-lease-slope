@@ -12,4 +12,4 @@
 
 **What this file cannot say.** A shorter lease causes the quoted price reduction, an individual flat will lose that amount annually, or the historical grouping itself explains prices. Micro-location/block vintage, flat model, condition, renovation, buyer characteristics and cohort selection remain omitted. The public file lacks unique unit/transaction identifiers. HC3 intervals do not account for within-block dependence, model misspecification or confounding. They are descriptive uncertainty only; no price estimator or causal/policy advice is offered.
 
-**Decision for review.** Keep the primary binned medians visible beside controlled summaries. Approve the thresholds, wide tolerance, historical grouping and association-only wording at Faiz's gate; publication is a separate decision. [Outputs](../outputs/group_summaries.csv) · [Audit](data_audit.md) · [Sensitivity](sensitivity.md).
+**Decision.** I am keeping the binned medians beside the controlled slopes, the wide lease screen, the 2023 historical groups, and association-only wording. [Outputs](../outputs/group_summaries.csv) · [Audit](data_audit.md) · [Sensitivity](sensitivity.md).

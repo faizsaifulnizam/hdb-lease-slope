@@ -11,6 +11,23 @@ from download import RAW,FILE,validate_cache
 ROOT=Path(__file__).resolve().parents[1]
 
 
+def check_group_anchors(groups, readme):
+    anchors = {
+        ('2025', 'all_types', 'historical_mature'): 1.198415688496771,
+        ('2025', 'all_types', 'historical_non_mature'): 0.6892626163764862,
+        ('2025', '4_room', 'historical_mature'): 1.1967679273127365,
+        ('2025', '4_room', 'historical_non_mature'): 0.674516986955109,
+    }
+    keys = [(r['sale_year'], r['scope'], r['historical_group']) for r in groups]
+    assert len(keys) == len(anchors) and set(keys) == set(anchors), 'Headline group keys differ; review year/group coverage'
+    for row, key in zip(groups, keys):
+        anchor = anchors[key]
+        got = float(row['median_pct_per_year'])
+        assert abs(got - anchor) < 1e-9, f'Headline {key}: {got} vs {anchor}, outside absolute tolerance 1e-9; compare input SHA-256 and model changes'
+        assert f'{anchor:.10f}' in readme, f'README spot-check missing: {key} {anchor:.10f}'
+    print('HEADLINE PASS: four keyed medians, absolute tolerance 1e-9')
+
+
 def main():
     manifest=validate_cache()
     with (RAW/FILE).open(encoding='utf-8',newline='') as f: raw=list(csv.DictReader(f))
@@ -22,7 +39,7 @@ def main():
         print('RAW MEDIAN PASS',town,bucket['lease_band_low'],len(values),statistics.median(values))
     with (ROOT/'outputs/group_summaries.csv').open() as f:groups=list(csv.DictReader(f))
     readme=(ROOT/'README.md').read_text(encoding='utf-8')
-    for r in groups:assert str(float(r['median_pct_per_year'])) in readme,'README anchor differs from current analysis; review snapshot changes'
+    check_group_anchors(groups, readme)
     broken=[];n=0
     for file in [ROOT/'README.md',ROOT/'data/raw/README.md',*list((ROOT/'docs').glob('*.md'))]:
         text=file.read_text(encoding='utf-8')
