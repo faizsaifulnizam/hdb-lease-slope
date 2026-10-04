@@ -26,6 +26,12 @@ Same-environment repeat builds have reproduced the reviewed CSV/PNG bytes. **Cro
 
 A fresh remote clone of the public repository, with this remediation diff applied, created its own Python 3.12.10 environment and installed the pinned requirements. It downloaded the same reviewed HDB SHA-256, then ran every README Python command: staging, full analysis, figures, 12 focused tests, smoke, `src/verify.py` and the separate mirror/rollback regression. All **82 tracked/new source and artifact files** retained their pre-run byte hashes. The working-copy full refit also reproduced the committed output and chart bytes. These are Windows same-environment checks; the separate Linux CI job supplies cross-OS execution evidence.
 
+## Hiring-audit repair replay — 2026-10-04
+
+A fresh clone of public `b11637c`, overlaid with the reviewed repair diff, pasted the README Bash block literally in a new Git Bash process. Executable platform selection activated its own Python 3.12.10 environment, and the install resolved all 12 direct/transitive pins. The live download matched the reviewed input SHA-256. All producers, 12 focused tests, smoke, `src/verify.py` and two dependency-backed figure checks passed. All 82 tracked-file hashes stayed unchanged after the first replay and after a second producer replay; all 13 output CSV/JSON files matched the repaired working copy. This is Windows candidate evidence, not evidence for a later merged commit.
+
+Oversized month/year components now become `invalid_lease_text` at the SQL staging seam; a regression first reproduced the INT32 year-multiplication failure, then passed with the bounded guard. The real snapshot's retained population remains 241,919 and every numerical output is byte-unchanged. The figure check renders both themes in isolation, verifies the raw/adjusted panel headings and report/site mirror bytes, and retains the existing later-swap rollback probe. Same-environment rendering repeats pass; cross-OS pixel identity is still not promised.
+
 ## Prior public-candidate evidence
 
 Before the original publication, a fresh remote clone at `431dee286eb2f79a0c500f9750123a4c061e0a7f` ran the README environment setup and all Python commands on Windows. Eleven focused tests, the separate figure mirror/rollback check and smoke passed. Twenty-one protected CSV/JSON/PNG/SVG artifacts matched and the tracked tree remained clean. This is dated candidate evidence, not a claim that an old receipt verifies every future commit.

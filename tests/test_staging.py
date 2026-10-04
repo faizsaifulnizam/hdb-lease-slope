@@ -46,7 +46,7 @@ class StagingTests(unittest.TestCase):
         from download import HEADER
         row=['2025-01','BEDOK','4 ROOM','1','ROAD','01 TO 03','90','Model','1980','54 years 04 months','500000']
         rows=[row,row.copy()]
-        for idx,value in [(0,'garbage'),(1,'UNKNOWN'),(2,'UNKNOWN'),(5,'09 TO 01'),(6,'nan'),(8,'2029'),(9,'54 years 12 months'),(10,'-1')]:
+        for idx,value in [(0,'garbage'),(1,'UNKNOWN'),(2,'UNKNOWN'),(5,'09 TO 01'),(6,'nan'),(8,'2029'),(9,'54 years 12 months'),(9,'54 years 2147483648 months'),(9,'54 years 999999999999999999999999999 months'),(9,'178956971 years'),(10,'-1')]:
             r=row.copy(); r[idx]=value; rows.append(r)
         r=row.copy();r[9]='20 years';rows.append(r)
         with tempfile.TemporaryDirectory() as td:
@@ -55,7 +55,11 @@ class StagingTests(unittest.TestCase):
                 w=csv.writer(f);w.writerow(HEADER);w.writerows(rows)
             con=stage(p,'2026-10')
             self.assertEqual(con.sql('select count(*) from sales').fetchone()[0],2)
-            self.assertEqual(con.sql("select count(*) from classified where exclusion_reason!='retained'").fetchone()[0],9)
+            self.assertEqual(con.sql("select count(*) from classified where exclusion_reason!='retained'").fetchone()[0],12)
+            malformed=['54 years 2147483648 months','54 years 999999999999999999999999999 months','178956971 years']
+            for text in malformed:
+                self.assertEqual(con.execute('select lease_months,exclusion_reason from classified where remaining_lease=?',[text]).fetchone(),
+                                 (None,'invalid_lease_text'))
             self.assertAlmostEqual(con.sql('select price_per_sqm from sales limit 1').fetchone()[0],500000/90)
             self.assertEqual(con.sql('select storey_midpoint from sales limit 1').fetchone()[0],2)
             # Identical-looking transactions remain two observations, not a invented ID/dedup.

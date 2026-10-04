@@ -108,8 +108,11 @@ footer{border-top:1px solid var(--rule);margin-top:60px;padding-top:18px;color:v
 <pre><code>git clone https://github.com/faizsaifulnizam/hdb-lease-slope
 cd hdb-lease-slope
 uv venv --python 3.12.10
-# Windows Git Bash: source .venv/Scripts/activate
-# Linux/macOS: source .venv/bin/activate
+if [ -f .venv/Scripts/activate ]; then
+  source .venv/Scripts/activate
+else
+  source .venv/bin/activate
+fi
 uv pip install -r requirements.txt
 python src/download.py
 python src/build_dataset.py

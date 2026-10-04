@@ -124,6 +124,8 @@ def main():
         axes[1].scatter(xr,100*yr,s=7,alpha=.18,color=muted,rasterized=True)
         axes[1].plot([xr.min(),xr.max()],[100*beta*xr.min(),100*beta*xr.max()],color=petrol,lw=2)
         axes[1].set_xlabel('Lease residual (years)',fontsize=9);axes[1].set_ylabel('log(price/m²) residual × 100',fontsize=9)
+        axes[0].set_title('Raw prices and band medians',fontsize=10)
+        axes[1].set_title('Storey, area and month removed',fontsize=10)
         qa(fig,'f3'+suffix);p=directory/('f3_exemplar'+suffix+'.png.part');fig.savefig(p,format='png',dpi=DPI);plt.close(fig);pairs.append((p,directory/('f3_exemplar'+suffix+'.png')))
         # SVG generator stays intentionally small: one question, no fabricated data shapes.
         bg='#14293D' if dark else '#FBFBF9';ink='#E7E3DC' if dark else '#14293D'
