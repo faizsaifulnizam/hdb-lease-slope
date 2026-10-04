@@ -3,13 +3,15 @@
   <img src="assets/banner.svg" alt="A lease slope is not a decay forecast: same town, flat type and year" width="1280">
 </picture>
 
+[Full-size banner](assets/banner.svg) · [dark](assets/banner-dark.svg).
+
 # hdb-lease-slope
 
 [![CI](https://github.com/faizsaifulnizam/hdb-lease-slope/actions/workflows/ci.yml/badge.svg)](https://github.com/faizsaifulnizam/hdb-lease-slope/actions/workflows/ci.yml) ![Python 3.12](https://img.shields.io/badge/Python-3.12-22607B) ![DuckDB](https://img.shields.io/badge/SQL-DuckDB-22607B) ![MIT](https://img.shields.io/badge/code-MIT-5C6B79)
 
 > **Longer leases are usually associated with higher price/m², but not on one common curve.** In 2025, the median controlled association per extra lease year is **+1.20%** across eligible historical mature-town segments versus **+0.69%** across historical non-mature segments. Restricting both groups to 4-room flats gives **+1.20% versus +0.67%**. These cross-sectional associations are **not an individual flat's annual depreciation rate**.
 
-Built 2026-10-04 · **private, pre-gate; publication not approved**. Part of a six-repo series on Singapore's public data.
+Built and reviewed 2026-10-04 · publication approved; fresh clean-history README setup and pipeline verified. Part of a six-repo series on Singapore's public data. [Report site](https://faizsaifulnizam.github.io/hdb-lease-slope/) · [verification scope](docs/verification.md).
 
 ## Key numbers (all reproducible)
 
@@ -23,6 +25,8 @@ Built 2026-10-04 · **private, pre-gate; publication not approved**. Part of a s
   <img src="reports/figures/f1_buckets.png" alt="2025 four-room band medians in Sengkang, Tampines, Woodlands and Yishun: generally higher prices with longer leases, but local reversals" width="900">
 </picture>
 
+[Full-size light](reports/figures/f1_buckets.png) · [dark](reports/figures/f1_buckets-dark.png).
+
 *Primary comparison: same town × flat type × year. Bands are [0,5), [5,10), … lease years; dots sit at each band's median remaining lease, and whiskers show transaction IQR—not confidence intervals. Town n includes all valid annual transactions, not just plotted bands. Missing bands are not connected across gaps.*
 
 ### More views
@@ -32,12 +36,16 @@ Built 2026-10-04 · **private, pre-gate; publication not approved**. Part of a s
   <img src="reports/figures/f2_slopes.png" alt="All 23 eligible four-room town coefficients with approximate HC3 intervals; Serangoon's negative estimate has an interval crossing zero" width="800">
 </picture>
 
+[Full-size light](reports/figures/f2_slopes.png) · [dark](reports/figures/f2_slopes-dark.png).
+
 *All eligible 4-room towns, alphabetically ordered; parentheses give transaction n. Shapes distinguish historical groups; approximate 95% HC3 intervals are not causal uncertainty.*
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="reports/figures/f3_exemplar-dark.png">
   <img src="reports/figures/f3_exemplar.png" alt="Sengkang raw scatter and band medians beside partial regression after removing storey, area and month effects from both axes" width="900">
 </picture>
+
+[Full-size light](reports/figures/f3_exemplar.png) · [dark](reports/figures/f3_exemplar-dark.png).
 
 *Largest usable 4-room cell: Sengkang (n=940). Controlled association +0.782% per extra lease year, approximate interval +0.710% to +0.854%, over 72.17–95.25 remaining years. The line fits residual log price, not a predicted flat price.*
 
@@ -102,6 +110,8 @@ python src/figures.py
 python -m unittest discover -s tests -p 'test_*.py' -v
 python tests/smoke_test.py
 python src/verify.py
+# Local dependency-backed figure mirror/rollback check (not the offline CI suite):
+python tests/check_figure_publish.py
 ```
 
 Spot-check: `group_summaries.csv` has **1.198415688496771 / 0.6892626163764862** for 2025 all-types medians, **1.1967679273127365 / 0.674516986955109** for 4-room; Sengkang 70–<75 has **n=152 / 6112.8608187134505 S$/m²**.
@@ -114,7 +124,7 @@ Lease precision varies; the 99-year screen can exclude atypical leases as well a
 
 ## Out of scope
 
-Estimator/API, individual-flat forecast, location/condition enrichment, causal policy claims, public site/releases before Faiz's gate.
+Estimator/API, individual-flat forecast, location/condition enrichment, causal policy claims. A report site and social-card source/PNG are prepared; merging, enabling Pages, visibility changes and the manual social-preview upload are separate publication actions. No source-only release is needed.
 
 ## Licence
 
@@ -122,6 +132,6 @@ Code: [MIT](LICENSE). Data: [Singapore Open Data Licence](https://data.gov.sg/op
 
 ---
 
-*Part of a six-repo series on Singapore's public data.* **The others:** [hdb-resale-mart](https://github.com/faizsaifulnizam/hdb-resale-mart) · [card-book-quality](https://github.com/faizsaifulnizam/card-book-quality) · [coe-quota-premium](https://github.com/faizsaifulnizam/coe-quota-premium) · [retail-sales-split](https://github.com/faizsaifulnizam/retail-sales-split) · coe-category-break (building; private).
+*Part of a six-repo series on Singapore's public data.* [01 · hdb-resale-mart](https://github.com/faizsaifulnizam/hdb-resale-mart) · [02 · card-book-quality](https://github.com/faizsaifulnizam/card-book-quality) · [03 · coe-quota-premium](https://github.com/faizsaifulnizam/coe-quota-premium) · [04 · retail-sales-split](https://github.com/faizsaifulnizam/retail-sales-split) · [05 · coe-category-break](https://github.com/faizsaifulnizam/coe-category-break) · [06 · hdb-lease-slope](https://github.com/faizsaifulnizam/hdb-lease-slope).
 
 *If you found this useful, a star helps others find it.*

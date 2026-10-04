@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hdb-lease-slope — A lease slope is not a decay forecast</title>
+<meta name="description" content="2025 HDB resales: controlled price/m² associations per extra remaining-lease year vary across towns. Historical mature/non-mature segment medians +1.20%/+0.69%; descriptive, not annual depreciation.">
+<link rel="canonical" href="https://faizsaifulnizam.github.io/hdb-lease-slope/">
+<meta property="og:title" content="hdb-lease-slope — A lease slope is not a decay forecast">
+<meta property="og:description" content="Same town, flat type and year. 62 eligible 2025 models; historical mature/non-mature unweighted medians +1.20%/+0.69% per extra remaining-lease year. Cross-sectional associations, not a flat's annual depreciation.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faizsaifulnizam.github.io/hdb-lease-slope/">
+<meta property="og:image" content="https://faizsaifulnizam.github.io/hdb-lease-slope/img/social-card.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="2025 HDB lease associations: +1.20% versus +0.69% historical-group segment medians, not annual depreciation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A lease slope is not a decay forecast">
+<meta name="twitter:description" content="2025 HDB resale associations within town × flat type. Historical segment medians +1.20%/+0.69%; not causal, not individual-flat depreciation.">
+<meta name="twitter:image" content="https://faizsaifulnizam.github.io/hdb-lease-slope/img/social-card.png">
+<meta name="twitter:image:alt" content="Historical mature/non-mature unweighted segment medians, 2025; cross-sectional associations only">
+<style>
+:root{--bg:#FBFBF9;--fg:#14293D;--muted:#5C6B79;--accent:#22607B;--rule:#E7E3DC;--fig-bg:#FBFBF9}
+@media (prefers-color-scheme: dark){:root{--bg:#101E2B;--fg:#EAE6DF;--muted:#9AA9B6;--accent:#4C93B5;--rule:#2A3B4A;--fig-bg:#0C1824}}
+@font-face{font-family:'Inter';src:url('fonts/Inter-Regular.ttf');font-weight:400}
+@font-face{font-family:'Inter';src:url('fonts/Inter-SemiBold.ttf');font-weight:600}
+@font-face{font-family:'Source Serif 4';src:url('fonts/SourceSerif4-Regular.ttf');font-weight:400}
+@font-face{font-family:'Source Serif 4';src:url('fonts/SourceSerif4-Bold.ttf');font-weight:700}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.6;font-size:16.5px}
+.wrap{max-width:880px;margin:0 auto;padding:36px 22px 56px}
+.series{color:var(--accent);font-size:14.5px;letter-spacing:.02em;margin:0 0 14px}
+.banner img{width:100%;height:auto;display:block;border:1px solid var(--rule);border-radius:10px}
+.lead{font-family:'Source Serif 4',Georgia,serif;font-size:22px;line-height:1.5;margin:34px 0 8px}
+.lead b{font-weight:700}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0}
+.stat{border:1px solid var(--rule);border-radius:10px;padding:14px 16px}
+.stat .n{font-family:'Source Serif 4',Georgia,serif;font-size:29px;line-height:1.15}
+.stat .l{color:var(--muted);font-size:14px;margin-top:6px}
+h1,h2{font-family:'Source Serif 4',Georgia,serif;font-weight:700}
+h1{font-size:32px;margin:28px 0 0}
+h2{font-size:26px;margin:52px 0 12px}
+p{margin:12px 0}
+a{color:var(--accent)}
+.fig{margin:26px 0}
+.fig img{width:100%;height:auto;display:block;border:1px solid var(--rule);border-radius:10px}
+.fig figcaption,.cap{color:var(--muted);font-size:14px;margin-top:8px}
+.note{border:1px solid var(--rule);border-radius:10px;padding:14px 16px;font-size:14.5px;color:var(--muted)}
+ol.method{margin:14px 0;padding-left:22px}
+ol.method li{margin:10px 0}
+pre{background:transparent;border:1px solid var(--rule);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:13px;line-height:1.55}
+code{font-family:ui-monospace,Consolas,Menlo,monospace;font-size:.92em}
+footer{border-top:1px solid var(--rule);margin-top:60px;padding-top:18px;color:var(--muted);font-size:13.5px}
+@media (max-width:760px){.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<p class="series">HDB resale registrations via data.gov.sg · 2025 cross-section · 6 of 6</p>
+<div class="banner">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="img/banner-dark.svg">
+<img src="img/banner.svg" alt="A lease slope is not a decay forecast: same town, same flat type, same year" width="1280" height="320">
+</picture>
+</div>
+<h1>Longer leases usually sit higher—not on one common curve</h1>
+<p class="lead">In 2025, the median controlled price/m² association per extra remaining-lease year is <b>+1.20%</b> across eligible historical mature-town segments versus <b>+0.69%</b> across historical non-mature segments. Restricting both groups to 4-room flats gives <b>+1.20% versus +0.67%</b>. These are <b>unweighted segment medians of cross-sectional associations</b>, not a national pooled estimate, a causal lease curve or an individual flat's annual depreciation rate.</p>
+<div class="stats">
+<div class="stat"><div class="n">25,084 · 129</div><div class="l">valid 2025 transactions · town × flat-type segments; latest complete past calendar year, not partial 2026</div></div>
+<div class="stat"><div class="n">62 · 22,048</div><div class="l">eligible controlled models · observations used; 67 segments withheld, not assigned zero coefficients</div></div>
+<div class="stat"><div class="n">+1.198% / +0.689%</div><div class="l">historical mature / non-mature all-type segment medians per extra lease year; 29 / 33 eligible cells</div></div>
+<div class="stat"><div class="n">+1.197% / +0.675%</div><div class="l">4-room historical-group medians; 12 / 11 eligible towns. Different locations, vintages and support still remain</div></div>
+</div>
+<figure class="fig">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="img/f1_buckets-dark.png">
+<img src="img/f1_buckets.png" alt="2025 four-room five-year lease-band medians in Sengkang, Tampines, Woodlands and Yishun show higher prices with longer leases and local reversals" width="1600" height="1400">
+</picture>
+<figcaption>Primary comparison: same town × flat type × year; five-year bands with n≥30. Dots sit at median remaining lease; whiskers are transaction IQR, not confidence intervals. Town n includes all valid annual observations. The four largest usable 4-room segments were selected by count/support, not outcome; missing bands are not connected. <a href="img/f1_buckets.png">Full-size light</a> · <a href="img/f1_buckets-dark.png">dark</a>.</figcaption>
+</figure>
+<h2>More views</h2>
+<figure class="fig">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="img/f2_slopes-dark.png">
+<img src="img/f2_slopes.png" alt="All 23 eligible four-room town coefficients, alphabetically ordered, with approximate unclustered HC3 intervals; Serangoon's negative interval crosses zero" width="1600" height="1800" loading="lazy">
+</picture>
+<figcaption>All eligible 4-room towns, alphabetically ordered; parentheses show transaction n. Shapes distinguish historical groups. The approximate 95% HC3 intervals are neither causal nor clustered; common-block dependence can make them too narrow. <a href="img/f2_slopes.png">Full-size light</a> · <a href="img/f2_slopes-dark.png">dark</a>.</figcaption>
+</figure>
+<figure class="fig">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="img/f3_exemplar-dark.png">
+<img src="img/f3_exemplar.png" alt="Sengkang raw prices and band medians beside partial regression after storey, area and month effects are removed from both axes" width="1600" height="900" loading="lazy">
+</picture>
+<figcaption>Largest usable 4-room cell: Sengkang, n=940. Controlled association +0.782% per extra lease year (approximate interval +0.710% to +0.854%), supported over 72.17–95.25 remaining years. The line fits residual log price, not a predicted flat price. <a href="img/f3_exemplar.png">Full-size light</a> · <a href="img/f3_exemplar-dark.png">dark</a>.</figcaption>
+</figure>
+<h2>Method: bands first, guarded associations second</h2>
+<ol class="method">
+<li><b>Validate and preserve the raw ledger.</b> Independently acquire the official HDB 2017-onward file; validate shape/history and byte hashes before replacement. Retain repeat-looking transactions because there is no unique unit or transaction ID. The reviewed snapshot has 241,920 rows: 241,919 retained and one inconsistent lease excluded, January 2017–partial October 2026. <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/outputs/source_snapshot.json">Byte receipt</a> · <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/docs/data_audit.md">audit</a>.</li>
+<li><b>Parse the precision the source actually has.</b> Convert reported years/months to months; valid range 1–1,188. Compare with a January-start 99-year lease expectation; retain offsets −12 through +18 months because commencement month and source precision differ. This is an analyst QC screen, not an official maximum reporting lag. The one −179-month mismatch is excluded, not corrected or proved erroneous. Strict 0–12 sensitivity is separate. <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/sql/01_staging.sql">SQL staging</a>.</li>
+<li><b>Compare within one complete year.</b> Use 2025 with all 12 registration months; form town × type × year five-year-band medians/IQR. Display only n≥30: 235 of 639 bands, 20,766 plotted-support observations; 404 thin bands / 4,318 observations are suppressed only from display and can still enter eligible models. <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/outputs/bucket_sensitivity.csv">Bucket ledger</a>.</li>
+<li><b>Fit guarded secondary OLS models.</b> Separately by town × type: log(price/m²) on lease years, storey midpoint, floor area and registration-month indicators; centered continuous predictors, earliest observed month as reference (15 parameters with 12 months). Require n≥100, ≥10-year lease span, ≥6 months, full rank, residual df≥30, ≥0.5 years residual lease SD, scaled condition≤1e8 and no unit leverage. Convert β with 100×(exp(β)−1). HC3 normal-approximation intervals transform β±1.96×SE; not exact, simultaneous, clustered or prediction intervals. <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/outputs/slopes.csv">Coefficients, support and diagnostics</a>.</li>
+<li><b>Compare historical groups, without a universal group effect.</b> Fix the lookup to <a href="https://www.hdb.gov.sg/-/media/hdb-pulse/news/2023/new-plus-housing-model-with-more-subsidies/Annex-A1.pdf">HDB's 20 August 2023 Annex A</a>; no planning-area inference. The later Standard/Plus/Prime framework is project/location-level, not this town map. Compare unweighted eligible-segment medians and ranges, with a 4-room check for type composition. Month controls leave between-flat/vintage variation, not aging of one flat; vintage/block controls would largely absorb lease. <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/outputs/town_groups.csv">Lookup</a> · <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/README.md">full rules and method</a>.</li>
+</ol>
+<h2>Sensitivity and limits—what this report cannot say</h2>
+<p>The historical group-median ordering persists at model n=50/100/200, lease spans 5/10/15 years, in 2024 and under stricter lease screening. Membership changes: a stable median does not validate individual estimates or equalize support. All-type ranges overlap (historical mature −0.392% to +1.749%; non-mature +0.070% to +1.406%). <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/docs/sensitivity.md">Sensitivity tables and interpretation</a>.</p>
+<p class="note"><b>Do not multiply these slopes by years to forecast a flat's future price.</b> Storey/area/month controls do not remove micro-location, block vintage, flat model, renovation/condition, buyer characteristics or selective resale. Observed resale transactions are not every flat or a repeated-unit panel. HC3 omits shared-block dependence and may understate uncertainty. No causal decay rate, historical-group cause, current-classification premium, loan/policy effect or individual value is established. Local bends remain: Sengkang's 80–&lt;85-year band is above its 90–&lt;95 band. No price estimator, causal curve or significance ranking is offered.</p>
+<h2>Reproduce</h2>
+<pre><code>git clone https://github.com/faizsaifulnizam/hdb-lease-slope
+cd hdb-lease-slope
+uv venv --python 3.12.10
+# Windows Git Bash: source .venv/Scripts/activate
+# Linux/macOS: source .venv/bin/activate
+uv pip install -r requirements.txt
+python src/download.py
+python src/build_dataset.py
+python src/analysis.py
+python src/figures.py
+python -m unittest discover -s tests -p 'test_*.py' -v
+python tests/smoke_test.py
+python src/verify.py
+# Local dependency-backed figure mirror/rollback check:
+python tests/check_figure_publish.py</code></pre>
+<p class="cap">Pinned environment: Python 3.12.10 / DuckDB 1.5.6 / NumPy 2.5.3 / matplotlib 3.11.2, bundled fonts. Spot-check <code>group_summaries.csv</code>: 2025 all-type medians 1.198415688496771 / 0.6892626163764862; 4-room 1.1967679273127365 / 0.674516986955109. Sengkang 70–&lt;75: n=152 / S$6,112.8608187134505 per m².</p>
+<p class="cap">A live source revision changes the snapshot; it is not an identity claim. Unchanged input bytes and metadata preserve the reviewed committed receipt time while the ignored pull manifest records actual acquisition time. CSV/PNG repeats were verified in the same pinned environment, not cross-platform pixel equality. Figure generation stages both <code>reports/figures</code> and <code>docs/img</code> in the existing rollback batch; ordinary swap failures, not whole-pipeline crash safety. One writer required. CI covers committed-artifact smoke and focused offline tests, not live acquisition/full analysis. <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/docs/verification.md">Dated verification scope</a> distinguishes private-archive reviews from the clean publication history; deployment is not claimed by local QA.</p>
+<h2>Read more</h2>
+<ul>
+<li><a href="https://github.com/faizsaifulnizam/hdb-lease-slope">Repository</a> — answer-first README with full method, rules and limits</li>
+<li><a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/docs/decision_memo.md">Decision memo</a> · <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/docs/sensitivity.md">Sensitivity</a> · <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/docs/data_audit.md">Data audit</a></li>
+<li><a href="https://github.com/faizsaifulnizam/hdb-lease-slope/tree/main/outputs">Committed outputs</a> · <a href="https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view">Official dataset</a></li>
+</ul>
+<footer>
+<p>Independent, unofficial analysis by <a href="https://github.com/faizsaifulnizam">Muhammad Faiz Saifulnizam</a>. Data © HDB, <a href="https://data.gov.sg/open-data-licence">Singapore Open Data Licence</a>. Code: MIT; bundled fonts: SIL OFL. Descriptive associations only, not a forecast or causal advice.</p>
+<p>Six-repo series: <a href="https://github.com/faizsaifulnizam/hdb-resale-mart">01 · hdb-resale-mart</a> · <a href="https://github.com/faizsaifulnizam/card-book-quality">02 · card-book-quality</a> · <a href="https://github.com/faizsaifulnizam/coe-quota-premium">03 · coe-quota-premium</a> · <a href="https://github.com/faizsaifulnizam/retail-sales-split">04 · retail-sales-split</a> · <a href="https://github.com/faizsaifulnizam/coe-category-break">05 · coe-category-break</a> · <a href="https://github.com/faizsaifulnizam/hdb-lease-slope">06 · hdb-lease-slope</a>.</p>
+</footer>
+</main>
+</body>
+</html>
