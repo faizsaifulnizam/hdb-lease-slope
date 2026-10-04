@@ -1,5 +1,13 @@
 # Verification receipts — publication preparation
 
+## Parent final candidate replay — 2026-10-04
+
+A genuinely fresh remote clone at publication-layer head `431dee286eb2f79a0c500f9750123a4c061e0a7f` executed the README's own environment creation, pinned dependency installation and every Python command. 11 focused tests, the separate mirror/rollback regression and smoke; 21 protected CSV/JSON/PNG/SVG artifacts passed. Every tracked file retained its pre-run SHA-256 and `git status --porcelain` was empty. Figure/banner copies under `docs/img/` match their producer outputs byte-for-byte. Both 1280×640 preview cards were checked.
+
+All reachable Git objects were scanned against the actual non-noreply identity values from the preserved private history: zero matches. Candidate commit authors and committers use the required portfolio noreply identity. Private markers are discovered across the archived history, excluding portfolio and GitHub service noreply identities.
+
+Durable operator receipts: `D:/Data Portfolio/work/wave3/evidence/publication-final/`. These are local evidence locations, not runnable project inputs. The following status/receipt edits change Markdown only; the executed producers and reviewed artifact bytes remain unchanged. Final merge-SHA CI, anonymous access and deployed-blob comparisons are separate coordinator gates, not inferred from this local replay.
+
 ## Clean history and prior private review
 
 The analysis was built and reviewed privately before publication. Its original commits, PR discussions and CI runs belong to the **private `hdb-lease-slope-private-archive`**, not PR numbers or Actions URLs in this new repository. The archive is read-only; no public-review claim is made for those private reviews.

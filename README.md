@@ -11,7 +11,7 @@
 
 > **Longer leases are usually associated with higher price/m², but not on one common curve.** In 2025, the median controlled association per extra lease year is **+1.20%** across eligible historical mature-town segments versus **+0.69%** across historical non-mature segments. Restricting both groups to 4-room flats gives **+1.20% versus +0.67%**. These cross-sectional associations are **not an individual flat's annual depreciation rate**.
 
-Built 2026-10-04 · approved for publication; final clean-root replay and deployment are separate gates. Part of a six-repo series on Singapore's public data. [Report site](https://faizsaifulnizam.github.io/hdb-lease-slope/) (prepared; deployment pending) · [verification scope](docs/verification.md).
+Built and reviewed 2026-10-04 · publication approved; fresh clean-history README setup and pipeline verified. Part of a six-repo series on Singapore's public data. [Report site](https://faizsaifulnizam.github.io/hdb-lease-slope/) · [verification scope](docs/verification.md).
 
 ## Key numbers (all reproducible)
 
