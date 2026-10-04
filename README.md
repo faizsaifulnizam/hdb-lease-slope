@@ -137,6 +137,6 @@ Code: [MIT](LICENSE). Data: [Singapore Open Data Licence](https://data.gov.sg/op
 
 ---
 
-*Part of a six-repo series on Singapore's public data.* [01 · hdb-resale-mart](https://github.com/faizsaifulnizam/hdb-resale-mart) · [02 · card-book-quality](https://github.com/faizsaifulnizam/card-book-quality) · [03 · coe-quota-premium](https://github.com/faizsaifulnizam/coe-quota-premium) · [04 · retail-sales-split](https://github.com/faizsaifulnizam/retail-sales-split) · [05 · coe-category-break](https://github.com/faizsaifulnizam/coe-category-break) · [06 · hdb-lease-slope](https://github.com/faizsaifulnizam/hdb-lease-slope).
+*Six-on-SG: six Singapore-data analyses plus one AI workflow — seven repos.* [01 · hdb-resale-mart](https://github.com/faizsaifulnizam/hdb-resale-mart) · [02 · card-book-quality](https://github.com/faizsaifulnizam/card-book-quality) · [03 · coe-quota-premium](https://github.com/faizsaifulnizam/coe-quota-premium) · [04 · retail-sales-split](https://github.com/faizsaifulnizam/retail-sales-split) · [05 · coe-category-break](https://github.com/faizsaifulnizam/coe-category-break) · [06 · hdb-lease-slope](https://github.com/faizsaifulnizam/hdb-lease-slope) · [07 · ai-analyst-workflow](https://github.com/faizsaifulnizam/ai-analyst-workflow) (the AI-workflow add).
 
 *If you found this useful, a star helps others find it.*
