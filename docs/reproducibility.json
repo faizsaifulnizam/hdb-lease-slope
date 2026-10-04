@@ -1,4 +1,6 @@
 {
+  "receipt_type": "historical_private_archive_replay",
+  "not_current_public_head": true,
   "match": true,
   "count": 20,
   "commands": [

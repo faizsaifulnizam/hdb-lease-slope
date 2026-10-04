@@ -11,7 +11,7 @@
 
 > **Longer leases are usually associated with higher price/m², but not on one common curve.** In 2025, the median controlled association per extra lease year is **+1.20%** across eligible historical mature-town segments versus **+0.69%** across historical non-mature segments. Restricting both groups to 4-room flats gives **+1.20% versus +0.67%**. These cross-sectional associations are **not an individual flat's annual depreciation rate**.
 
-Built and reviewed 2026-10-04 · publication approved; fresh clean-history README setup and pipeline verified. Part of a six-repo series on Singapore's public data. [Report site](https://faizsaifulnizam.github.io/hdb-lease-slope/) · [verification scope](docs/verification.md).
+Built and reviewed 2026-10-04. Public repo; GitHub Pages is on. Full refit was checked on my machine; a stranger replay must pass `src/verify.py` (see the float tolerance below). Part of a six-repo series on Singapore's public data. [Report site](https://faizsaifulnizam.github.io/hdb-lease-slope/) · [verification scope](docs/verification.md).
 
 ## Key numbers (all reproducible)
 
@@ -27,7 +27,7 @@ Built and reviewed 2026-10-04 · publication approved; fresh clean-history READM
 
 [Full-size light](reports/figures/f1_buckets.png) · [dark](reports/figures/f1_buckets-dark.png).
 
-*Primary comparison: same town × flat type × year. Bands are [0,5), [5,10), … lease years; dots sit at each band's median remaining lease, and whiskers show transaction IQR—not confidence intervals. Town n includes all valid annual transactions, not just plotted bands. Missing bands are not connected across gaps.*
+*Primary comparison: same town × flat type × year. Bands are [0,5), [5,10), … lease years; dots sit at each band's median remaining lease, and whiskers show transaction IQR—not confidence intervals. Panel n is all valid 2025 sales in that town × 4-room cell, including bands hidden for n<30. It is not the town total. Missing bands are not connected across gaps.*
 
 ### More views
 
@@ -66,7 +66,7 @@ HDB already excludes transactions that may not reflect full market price, includ
 3. **Primary medians within one year.** Latest completed past calendar year with all 12 registration months = **2025**, not partial 2026. Five-year lease-band medians/IQR within **town × type × year**; display n≥30. Four examples are the largest eligible 4-room models with at least three usable bands (alphabetical tie-break): Sengkang, Tampines, Woodlands, Yishun. Selection is by count/support, not outcome. Suppressed bands remain in staging and can enter eligible models.
 4. **Secondary models separately by town × type, 2025.** OLS: `log(price/m²) = intercept + beta*lease_years + storey_midpoint + floor_area_sqm + registration_month_indicators + error`. Center continuous predictors; one dummy per observed month except earliest reference. All 12 months give **15 parameters**, not a numeric month trend. Require n≥100, ≥10-year lease span, ≥6 months, full rank, residual df≥30, ≥0.5 residual lease years after controls, scaled condition≤1e8 and no unit leverage. Withheld coefficients are blank, not zero.
 5. **Identification and uncertainty.** Lease combines vintage and sale time. Month effects remove time-level differences; β uses residual **between-flat/vintage** variation—not aging of one flat. Block/vintage fixed effects would largely absorb it; no age-period-cohort causal identification claimed. Residual lease SD is 1.74–16.53 years across reported models; support/diagnostics stay in [slopes.csv](outputs/slopes.csv). HC3 uses squared residuals adjusted by leverage; intervals are `beta ± 1.96*SE`, a normal approximation, transformed with **`100*(exp(beta)-1)`**. These are not exact, simultaneous, clustered or prediction intervals. HC3 does **not** account for shared-block dependence; intervals may be too narrow.
-6. **Historical groups, not current labels.** [HDB's 20 August 2023 Annex A](https://www.hdb.gov.sg/-/media/hdb-pulse/news/2023/new-plus-housing-model-with-more-subsidies/Annex-A1.pdf) lists 15 mature and 12 non-mature towns/estates. [Lookup](outputs/town_groups.csv) maps `Kallang/ Whampoa` to `KALLANG/WHAMPOA`; no planning-area inference. Tengah has no source record. [Standard/Plus/Prime](https://www.hdb.gov.sg/about-us/news-and-publications/press-releases/New-Flat-Classification-Framework) applies at project/location level from October 2024, not a current mature-town map. Compare **unweighted eligible-segment medians/ranges**, plus 4-room because type composition differs. No group p-value or universal group effect.
+6. **Historical groups, not current labels.** [HDB's 20 August 2023 Annex A](https://www.hdb.gov.sg/-/media/hdb-pulse/news/2023/new-plus-housing-model-with-more-subsidies/Annex-A1.pdf) lists 15 mature and 12 non-mature towns/estates. [Lookup](outputs/town_groups.csv) maps `Kallang/ Whampoa` to `KALLANG/WHAMPOA`; no planning-area inference. Tengah is non-mature on Annex A and is in the lookup. This resale file has no Tengah rows, so no slope is estimated. [Standard/Plus/Prime](https://www.hdb.gov.sg/about-us/news-and-publications/press-releases/New-Flat-Classification-Framework) applies at project/location level from October 2024, not a current mature-town map. Compare **unweighted eligible-segment medians/ranges**, plus 4-room because type composition differs. No group p-value or universal group effect.
 
 ### Rules chosen, and why
 
@@ -85,7 +85,7 @@ HDB already excludes transactions that may not reflect full market price, includ
 - [Bucket receipt](outputs/bucket_sensitivity.csv): **20,766 + 4,318 = 25,084**; suppression is not another raw exclusion.
 - Independent stdlib raw medians: Sengkang 70–<75 **152 / S$6,112.86/m²**; Tampines 55–<60 **211 / S$6,179.89**; Yishun 55–<60 **175 / S$5,659.34**.
 - Runnable parser/invalid/tolerance tests; exact beta/HC3 math; thin/rank cells and month-only collinearity. **Synthetic data are tests only**, never analysis inputs.
-- CI's stdlib job checks committed receipts; separate focused offline SQL/math tests. **No live download/full analysis in CI.** Raw stays ignored, not vendored to claim convenient full CI.
+- CI checks committed receipts and focused offline tests, plus a separate **Linux live-download/full-refit job that runs `src/verify.py`**. It requires the reviewed source SHA-256; an official revision fails with an explicit snapshot-review message. Raw stays ignored. Cross-OS CSV/PNG byte equality is not required.
 - Figures enforce ≥40px text margins, clipping/overlap checks and partial-regression identity. Six theme renders visually reviewed; two-render hashes and fresh-clone replay in [verification](docs/verification.md).
 
 ### Limits — what this file cannot say
@@ -114,7 +114,9 @@ python src/verify.py
 python tests/check_figure_publish.py
 ```
 
-Spot-check: `group_summaries.csv` has **1.198415688496771 / 0.6892626163764862** for 2025 all-types medians, **1.1967679273127365 / 0.674516986955109** for 4-room; Sengkang 70–<75 has **n=152 / 6112.8608187134505 S$/m²**.
+If `uv` is missing: `pip install uv`. Then rerun from `uv venv`.
+
+Spot-check: `group_summaries.csv` 2025 all-types medians **1.1984156885 / 0.6892626164** and 4-room **1.1967679273 / 0.6745169870**, absolute tolerance **1e-9**. The reviewer reported a Linux refit of the same SHA-256 moving 1.198415688496771 to 1.1984156884967616: floating-point/linear-algebra roundoff, not a new HDB file. Same-environment CSV and PNG bytes matched the reviewed build; cross-OS PNG bytes can differ, and OLS text can differ in the last digits. Sengkang 70–<75: **n=152 / S$6,112.86/m²**.
 
 Snapshot-specific numbers: the official live file can be revised. A changed hash means fresh analysis, not identity with the old snapshot. `--force` explicitly refreshes; altered cache fails. Single DuckDB thread/fixed row ordering. Same-environment CSV/PNG equality is verified; cross-OS pixel identity is not. The ignored raw manifest records each actual pull time. If bytes and source metadata are unchanged, the committed snapshot receipt preserves its reviewed retrieval time; changed inputs receive a new receipt. Byte hash/rows/coverage anchor the input. Producer batches roll back ordinary swaps, not power loss/process kill across the entire pipeline. One writer required.
 
@@ -124,7 +126,7 @@ Lease precision varies; the 99-year screen can exclude atypical leases as well a
 
 ## Out of scope
 
-Estimator/API, individual-flat forecast, location/condition enrichment, causal policy claims. A report site and social-card source/PNG are prepared; merging, enabling Pages, visibility changes and the manual social-preview upload are separate publication actions. No source-only release is needed.
+Estimator/API, individual-flat forecast, location/condition enrichment, causal policy claims. [Published report](https://faizsaifulnizam.github.io/hdb-lease-slope/). The manual GitHub social-preview upload remains separate; no source-only release is needed.
 
 ## Licence
 
