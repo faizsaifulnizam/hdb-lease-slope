@@ -8,7 +8,7 @@ The linked [historical JSON receipt](reproducibility.json) is the **old private-
 
 ## Reproduction contract
 
-Use the README's commands from the repository root with Python 3.12.10, DuckDB 1.5.6, NumPy 2.5.3 and matplotlib 3.11.2. If `uv` is missing, install it with `pip install uv` first. The reviewed HDB input is SHA-256 `9835dfe6cd92a46a1302fabf3a692bf893ee5b86ec95638d10dfce61dbfbdb9a`, 241,920 rows and 118 registration months, January 2017–partial October 2026. [Source receipt](../outputs/source_snapshot.json).
+Use the README's commands from the repository root with Python 3.12.10, DuckDB 1.5.6, NumPy 2.5.3 and matplotlib 3.11.2. If `uv` is missing, install it with `pip install uv` first. The reviewed HDB input is SHA-256 `945e09d75efb2eec1ab1618ce369c0d8eb885ef34158e29426f1af141d4000e4`, 242,032 rows and 118 registration months, January 2017–partial October 2026. [Source receipt](../outputs/source_snapshot.json).
 
 `src/verify.py` independently recomputes three raw band medians, verifies four headline medians, checks relative Markdown/image links and banner XML, and prints artifact hashes. The headline check matches **year × scope × historical group**, requires exactly four distinct expected keys, and compares against the reviewed full-precision anchors with **absolute tolerance <1e-9 percentage points**. Missing/duplicate/wrong-year groups, non-finite values and material numerical changes fail. Rounded ten-decimal spot-checks must remain in the README. It no longer demands exact float text or treats roundoff as proof of a source revision.
 
@@ -21,6 +21,18 @@ Same-environment repeat builds have reproduced the reviewed CSV/PNG bytes. **Cro
 - **Smoke:** stdlib parser/cache/rollback checks, headline-roundoff regression and committed-artifact ledger/transformation checks.
 - **Focused offline:** DuckDB staging and NumPy OLS/HC3 tests, plus the same headline regression. Synthetic data are tests only.
 - **Linux live refit:** fresh `uv` environment and pinned dependency setup; official download; reviewed source SHA-256 guard; staging, analysis, all six theme figures, focused tests, smoke, `src/verify.py` and the figure mirror/rollback check. This job intentionally fails with a snapshot-review message if the official file changes. Raw is ignored, not vendored. It does not require Windows-produced CSV/PNG bytes to match Linux.
+
+## Reviewed source refresh — 2026-10-07
+
+Original build/review: 2026-10-04. Actual refresh acquisition: **2026-10-07 00:24:09 SGT** (`2026-10-06T16:24:09+00:00` in the manifest). The new receipt records 23,940,111 bytes / 242,032 rows, SHA-256 `945e09d75efb2eec1ab1618ce369c0d8eb885ef34158e29426f1af141d4000e4`. Both old and fresh immutable raw snapshots and acquisition manifests were preserved outside the repository, with exact byte hashes verified.
+
+Full-field, multiplicity-preserving CSV comparison found **114 October 2026 additions and two removals (one July, one August 2026)**, net +112. No 2025 or 2024 rows changed. Raw ledger is now **242,031 retained + one inconsistent lease = 242,032**. The former source-hash guard was observed rejecting these new bytes; the existing guard is unchanged and a future official revision still requires review.
+
+The complete README setup created a dedicated Python 3.12.10 environment and installed the existing 12 pinned requirements. Staging, full analysis, all six theme renders, **12 focused tests**, artifact smoke, `src/verify.py` and **two figure mirror/rollback tests** passed. The runner cleared inherited `PYTHONPATH`/`PYTHONHOME` first because this agent host otherwise injected incompatible Python 3.14 NumPy into the 3.12 environment. No project dependency or pipeline code changed.
+
+An independent verifier imported no production helpers: stdlib CSV parsing/quantiles checked all **6,112 historical bucket rows**, **639 baseline bucket rows** and **1,272 annual segment profiles**. Reduced QR plus a separate linear solve and HC3 sandwich checked all **62 reported baseline coefficients/intervals** and every one of the **28 sensitivity summaries**, within 1e-9 percentage points. Three raw band medians and the four group medians were independently reproduced. All nine baseline/sensitivity/lookup/excluded-row CSVs remain byte-identical, so no numerical anchor was rebaselined. Only historical profile/band exports, the raw ledger and source receipt change numerically.
+
+Two full producer replays reproduced **32 artifact hashes** in the same environment: 13 output CSV/JSON files, six report figures, six site figure mirrors and four banner source/mirrors, plus three unchanged social-card assets. All tracked-file hashes also remained unchanged across the final literal README replay. The six renders passed executable margin/overlap/partial-regression checks and mirror checks. Fresh visual inspection was attempted twice but the image-analysis service disconnected; the contact sheet and full-size images are retained for independent parent review. This is candidate evidence, not a merged/deployed-page receipt.
 
 ## Remediation replay — 2026-10-04
 

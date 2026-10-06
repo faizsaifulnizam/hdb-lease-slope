@@ -11,7 +11,7 @@
 
 > **Longer leases are usually associated with higher price/m², but not on one common curve.** In 2025, the median controlled association per extra lease year is **+1.20%** across eligible historical mature-town segments versus **+0.69%** across historical non-mature segments. Restricting both groups to 4-room flats gives **+1.20% versus +0.67%**. These cross-sectional associations are **not an individual flat's annual depreciation rate**.
 
-Built and reviewed 2026-10-04. Public repo; GitHub Pages is on. Full refit was checked on my machine; a stranger replay must pass `src/verify.py` (see the float tolerance below). Part of a six-repo series on Singapore's public data. [Report site](https://faizsaifulnizam.github.io/hdb-lease-slope/) · [verification scope](docs/verification.md).
+Built and reviewed 2026-10-04; official dataset refreshed and refit 2026-10-07. Public repo; GitHub Pages is on. Full refit was checked on my machine; a stranger replay must pass `src/verify.py` (see the float tolerance below). Part of a six-repo series on Singapore's public data. [Report site](https://faizsaifulnizam.github.io/hdb-lease-slope/) · [verification scope](docs/verification.md).
 
 **Intended use:** For a housing-market analyst, this brief supports interpreting observed lease associations within town and flat-type segments, with their support and uncertainty kept visible. It is not a comparable-selection or valuation tool, and the slopes do not measure an individual flat’s depreciation or value.
 
@@ -20,7 +20,7 @@ Built and reviewed 2026-10-04. Public repo; GitHub Pages is on. Full refit was c
 - **2025:** 25,084 valid transactions / 129 town × flat-type cells. 62 eligible models use 22,048 transactions; 67 cells are withheld. 61 of 62 reported coefficients are positive, not necessarily individually distinguishable from zero.
 - **All types, historical groups:** 29 mature cells, median +1.198%, range **−0.392% to +1.749%**; 33 non-mature cells, median +0.689%, range **+0.070% to +1.406%** per extra lease year. Unweighted segment distributions, not a national pooled estimate.
 - **4-room:** 12 mature towns, median +1.197%; 11 non-mature towns, median +0.675%. Type composition does not alone explain the median ordering, but location/vintage/support still differ.
-- **Primary bands:** 235 of 639 five-year cells meet n≥30; 404 thin bands / 4,318 transactions are suppressed only from display. Raw ledger: **241,919 retained + 1 inconsistent lease = 241,920 records**, January 2017–partial October 2026.
+- **Primary bands:** 235 of 639 five-year cells meet n≥30; 404 thin bands / 4,318 transactions are suppressed only from display. Raw ledger: **242,031 retained + 1 inconsistent lease = 242,032 records**, January 2017–partial October 2026.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="reports/figures/f1_buckets-dark.png">
@@ -57,7 +57,9 @@ Holding town and flat type fixed, how does price/m² vary with remaining lease�
 
 ## The data
 
-[Official HDB resale registrations, January 2017 onwards](https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view), ID `d_8b84c4ee58e3cfc0ece0d773c8ca6abc`. Independent downloader; no sibling repo's processed data. Live 2026-10-04 pull: 241,920 records / 118 months. [Byte receipt](outputs/source_snapshot.json) and [audit](docs/data_audit.md) carry SHA-256, fields, coverage, nulls and repeat-looking-row counts.
+[Official HDB resale registrations, January 2017 onwards](https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view), ID `d_8b84c4ee58e3cfc0ece0d773c8ca6abc`. Independent downloader; no sibling repo's processed data. Live 2026-10-07 pull: 242,032 records / 118 months. [Byte receipt](outputs/source_snapshot.json) and [audit](docs/data_audit.md) carry SHA-256, fields, coverage, nulls and repeat-looking-row counts.
+
+The refresh adds 114 October 2026 rows and removes two earlier rows (one July, one August), a net increase of 112. Exact-row multiset comparison finds no 2025 additions or removals; all baseline coefficients and 28 sensitivity summaries were refit and remain unchanged.
 
 HDB already excludes transactions that may not reflect full market price, including some relatives/part-share transfers. Area includes recess/upgrading/terrace space. The file lacks unique unit/transaction IDs. Only the 2017-onward file is used; this is scope, not a claim that no earlier file recorded remaining lease.
 
@@ -83,12 +85,12 @@ HDB already excludes transactions that may not reflect full market price, includ
 
 ### Validation — receipts, not claims
 
-- [Raw ledger](outputs/exclusions.csv): **241,919 + 1 = 241,920**. [Annual model ledger](outputs/model_exclusions.csv): **22,048 estimated + 2,576 small-n + 460 narrow-support = 25,084**.
+- [Raw ledger](outputs/exclusions.csv): **242,031 + 1 = 242,032**. [Annual model ledger](outputs/model_exclusions.csv): **22,048 estimated + 2,576 small-n + 460 narrow-support = 25,084**.
 - [Bucket receipt](outputs/bucket_sensitivity.csv): **20,766 + 4,318 = 25,084**; suppression is not another raw exclusion.
 - Independent stdlib raw medians: Sengkang 70–<75 **152 / S$6,112.86/m²**; Tampines 55–<60 **211 / S$6,179.89**; Yishun 55–<60 **175 / S$5,659.34**.
 - Runnable parser/invalid/tolerance tests; exact beta/HC3 math; thin/rank cells and month-only collinearity. **Synthetic data are tests only**, never analysis inputs.
 - CI checks committed receipts and focused offline tests, plus a separate **Linux live-download/full-refit job that runs `src/verify.py`**. It requires the reviewed source SHA-256; an official revision fails with an explicit snapshot-review message. Raw stays ignored. Cross-OS CSV/PNG byte equality is not required.
-- Figures enforce ≥40px text margins, clipping/overlap checks and partial-regression identity. Six theme renders visually reviewed; two-render hashes and fresh-clone replay in [verification](docs/verification.md).
+- Figures enforce ≥40px text margins, clipping/overlap checks and partial-regression identity. Original six-theme visual review was on 2026-10-04; refreshed renders pass executable QA and repeat hashes, but fresh visual inspection is pending because the image-analysis service was unavailable. [Verification scope](docs/verification.md).
 
 ### Limits — what this file cannot say
 
