@@ -1,14 +1,16 @@
 # Data audit — HDB lease slope
 
-Snapshot: live independent pull **2026-10-04 08:13:38 SGT**. [HDB dataset](https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view), ID `d_8b84c4ee58e3cfc0ece0d773c8ca6abc`. Raw bytes are ignored, unchanged after acquisition. [Byte receipt](../outputs/source_snapshot.json): SHA-256 `9835dfe6cd92a46a1302fabf3a692bf893ee5b86ec95638d10dfce61dbfbdb9a`, 23,928,760 bytes, 241,920 records, 118 months (2017-01–2026-10). The October 2026 data are partial, not a completed year.
+Snapshot: live independent pull **2026-10-07 00:24:09 SGT**. [HDB dataset](https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view), ID `d_8b84c4ee58e3cfc0ece0d773c8ca6abc`. Raw bytes are ignored, unchanged after acquisition. [Byte receipt](../outputs/source_snapshot.json): SHA-256 `945e09d75efb2eec1ab1618ce369c0d8eb885ef34158e29426f1af141d4000e4`, 23,940,111 bytes, 242,032 records, 118 months (2017-01–2026-10). The October 2026 data are partial, not a completed year.
+
+The original build was reviewed on 2026-10-04. Exact-row multiset comparison against its preserved SHA-256 snapshot finds **114 additions in October 2026 and two removals (one July, one August 2026)**, net +112. There are **zero 2025 additions or removals**. No unique transaction ID is invented: the comparison uses all 11 source fields and retains multiplicity. The 2025 baseline, 2024 comparison and every sensitivity were recomputed; their CSV bytes remain unchanged.
 
 ## Profile before analysis
 
 - All 11 source columns present; zero empty values in every column. 26 observed towns, seven flat types.
 - Resale price: S$140,000–S$1,728,000. Floor area: 31–366.7 m². Lease commencement year: 1966–2023. Large areas are not automatically errors; no percentile trimming or winsorising.
-- Lease formats: 222,076 records with years + months (including singular `01 month`); 19,844 years-only strings. Years-only values are stored as exact multiples of 12 months, not imputed midpoint values.
+- Lease formats: 222,181 records with years + months (including singular `01 month`); 19,851 years-only strings. Years-only values are stored as exact multiples of 12 months, not imputed midpoint values.
 - 318 excess fully identical-looking records. **Retained:** there is no unit number or transaction ID in the public file. A repeat-looking record can describe different units or transactions. `block` × `street_name` is not a unique transaction key. No generated ID is represented as one.
-- Live webpage column dictionary confirmed via the fetched HTML: month is Month (YYYY-MM); town/type/block/street/storey/model/lease commencement/remaining lease are Text; floor area is also published as Text and must be converted; resale price is Numeric. The live page total was 241,920, matching the independent CSV pull. Seed metadata was used for initial reconnaissance only, not numeric results.
+- Live webpage column dictionary confirmed via the fetched HTML: month is Month (YYYY-MM); town/type/block/street/storey/model/lease commencement/remaining lease are Text; floor area is also published as Text and must be converted; resale price is Numeric. The original 2026-10-04 live page total was 241,920, matching that original independent CSV pull; the refreshed count here comes from the 2026-10-07 CSV, not a new webpage-total check. Seed metadata was used for initial reconnaissance only, not numeric results.
 
 HDB's live notes say floor area includes purchased recess areas, upgrading space and roof terraces; transactions between relatives and part shares may be excluded by the provider; agreed prices depend on many factors and are indicative. These are provider exclusions, not counts this file can reconstruct.
 
@@ -22,10 +24,10 @@ Exactly **one** record is outside the wide interval: Jurong East, 3-room, Teban 
 
 | Exclusive classification | Records |
 |---|---:|
-| Retained | 241,919 |
+| Retained | 242,031 |
 | Lease inconsistent | 1 |
 | Invalid month / town / type / price / area / storey / commencement / text | 0 each |
-| Raw total | 241,920 |
+| Raw total | 242,032 |
 
 [Ledger](../outputs/exclusions.csv) reconciles retained + all exclusive exclusions = raw. Invalid finite/nonpositive numbers, reversed/unparseable storey ranges, impossible chronology and malformed lease components have runnable synthetic checks. Structural download failures abort before replacing the previous raw/manifest pair.
 
