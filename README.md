@@ -13,6 +13,8 @@
 
 Built and reviewed 2026-10-04. Public repo; GitHub Pages is on. Full refit was checked on my machine; a stranger replay must pass `src/verify.py` (see the float tolerance below). Part of a six-repo series on Singapore's public data. [Report site](https://faizsaifulnizam.github.io/hdb-lease-slope/) · [verification scope](docs/verification.md).
 
+**Intended use:** For a housing-market analyst, this brief supports interpreting observed lease associations within town and flat-type segments, with their support and uncertainty kept visible. It is not a comparable-selection or valuation tool, and the slopes do not measure an individual flat’s depreciation or value.
+
 ## Key numbers (all reproducible)
 
 - **2025:** 25,084 valid transactions / 129 town × flat-type cells. 62 eligible models use 22,048 transactions; 67 cells are withheld. 61 of 62 reported coefficients are positive, not necessarily individually distinguishable from zero.
