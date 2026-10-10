@@ -46,7 +46,7 @@ def main():
     fields=[d[0] for d in cur.description]
     part=outputs/'excluded_rows.csv.part';write_csv(part,[dict(zip(fields,r)) for r in cur.fetchall()],fields);pairs.append((part,outputs/'excluded_rows.csv'))
     part=processed/'sales.parquet.part'
-    con.execute(f"COPY (SELECT * FROM sales ORDER BY month,town,flat_type,block,street_name,storey_midpoint,floor_area_sqm,lease_months,resale_price) TO '{part.as_posix()}' (FORMAT PARQUET)")
+    con.execute("COPY (SELECT * FROM sales ORDER BY month,town,flat_type,block,street_name,storey_midpoint,floor_area_sqm,lease_months,resale_price) TO ? (FORMAT PARQUET)",[part.as_posix()])
     pairs.append((part,processed/'sales.parquet'))
     # Keep the reviewed snapshot's first retrieval time when the byte identity is unchanged.
     # The ignored raw manifest still records each actual download time.

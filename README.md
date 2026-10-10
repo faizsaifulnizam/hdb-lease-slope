@@ -15,7 +15,7 @@ Built and reviewed 2026-10-04; official dataset refreshed and refit 2026-10-07. 
 
 **Intended use:** For a housing-market analyst, this brief supports interpreting observed lease associations within town and flat-type segments, with their support and uncertainty kept visible. It is not a comparable-selection or valuation tool, and the slopes do not measure an individual flat’s depreciation or value.
 
-## Key numbers (all reproducible)
+## Key numbers — reviewed 7 October 2026 snapshot
 
 - **2025:** 25,084 valid transactions / 129 town × flat-type cells. 62 eligible models use 22,048 transactions; 67 cells are withheld. 61 of 62 reported coefficients are positive, not necessarily individually distinguishable from zero.
 - **All types, historical groups:** 29 mature cells, median +1.198%, range **−0.392% to +1.749%**; 33 non-mature cells, median +0.689%, range **+0.070% to +1.406%** per extra lease year. Unweighted segment distributions, not a national pooled estimate.
@@ -67,7 +67,7 @@ HDB already excludes transactions that may not reflect full market price, includ
 
 1. **Validate and preserve provenance.** Check CSV shape/history before replacing raw and manifest. A cache must match its existing byte hash. DuckDB stages strings using `TRY_*`, derives `price/area` and storey midpoint, and assigns one exclusive exclusion reason. **Retain repeat-looking transactions:** no invented unique key or silent deduplication.
 2. **Parse with honest precision.** `61 years 04 months` → 736 months; `62 years 01 month` → 745; `60 years` → 720. Require valid components and 1–1,188 months. January-start expected months = `12*(commence_year+99-sale_year)-(sale_month-1)`. Retain reported-minus-expected offsets **−12 through +18 months**: commencement month is unknown, years-only precision coarse, and reference-date/rounding slack allowed. Extra slack is an analyst QC screen, not an official maximum lag. One −179-month mismatch is excluded, not corrected or proven erroneous. Strict 0–12 sensitivity is exported.
-3. **Primary medians within one year.** Latest completed past calendar year with all 12 registration months = **2025**, not partial 2026. Five-year lease-band medians/IQR within **town × type × year**; display n≥30. Four examples are the largest eligible 4-room models with at least three usable bands (alphabetical tie-break): Sengkang, Tampines, Woodlands, Yishun. Selection is by count/support, not outcome. Suppressed bands remain in staging and can enter eligible models.
+3. **Primary medians within one year.** Latest completed past calendar year with all 12 registration months = **2025**, not partial 2026. Every modeled annual population, including the previous-year and strict-filter sensitivity, must contain all twelve months before analysis outputs are published. Five-year lease-band medians/IQR within **town × type × year**; display n≥30. Four examples are the largest eligible 4-room models with at least three usable bands (alphabetical tie-break): Sengkang, Tampines, Woodlands, Yishun. Selection is by count/support, not outcome. Suppressed bands remain in staging and can enter eligible models.
 4. **Secondary models separately by town × type, 2025.** OLS: `log(price/m²) = intercept + beta*lease_years + storey_midpoint + floor_area_sqm + registration_month_indicators + error`. Center continuous predictors; one dummy per observed month except earliest reference. All 12 months give **15 parameters**, not a numeric month trend. Require n≥100, ≥10-year lease span, ≥6 months, full rank, residual df≥30, ≥0.5 residual lease years after controls, scaled condition≤1e8 and no unit leverage. Withheld coefficients are blank, not zero.
 5. **Identification and uncertainty.** Lease combines vintage and sale time. Month effects remove time-level differences; β uses residual **between-flat/vintage** variation—not aging of one flat. Block/vintage fixed effects would largely absorb it; no age-period-cohort causal identification claimed. Residual lease SD is 1.74–16.53 years across reported models; support/diagnostics stay in [slopes.csv](outputs/slopes.csv). HC3 uses squared residuals adjusted by leverage; intervals are `beta ± 1.96*SE`, a normal approximation, transformed with **`100*(exp(beta)-1)`**. These are not exact, simultaneous, clustered or prediction intervals. HC3 does **not** account for shared-block dependence; intervals may be too narrow.
 6. **Historical groups, not current labels.** [HDB's 20 August 2023 Annex A](https://www.hdb.gov.sg/-/media/hdb-pulse/news/2023/new-plus-housing-model-with-more-subsidies/Annex-A1.pdf) lists 15 mature and 12 non-mature towns/estates. [Lookup](outputs/town_groups.csv) maps `Kallang/ Whampoa` to `KALLANG/WHAMPOA`; no planning-area inference. Tengah is non-mature on Annex A and is in the lookup. This resale file has no Tengah rows, so no slope is estimated. [Standard/Plus/Prime](https://www.hdb.gov.sg/about-us/news-and-publications/press-releases/New-Flat-Classification-Framework) applies at project/location level from October 2024, not a current mature-town map. Compare **unweighted eligible-segment medians/ranges**, plus 4-room because type composition differs. No group p-value or universal group effect.
@@ -89,7 +89,7 @@ HDB already excludes transactions that may not reflect full market price, includ
 - [Bucket receipt](outputs/bucket_sensitivity.csv): **20,766 + 4,318 = 25,084**; suppression is not another raw exclusion.
 - Independent stdlib raw medians: Sengkang 70–<75 **152 / S$6,112.86/m²**; Tampines 55–<60 **211 / S$6,179.89**; Yishun 55–<60 **175 / S$5,659.34**.
 - Runnable parser/invalid/tolerance tests; exact beta/HC3 math; thin/rank cells and month-only collinearity. **Synthetic data are tests only**, never analysis inputs.
-- CI checks committed receipts and focused offline tests, plus a separate **Linux live-download/full-refit job that runs `src/verify.py`**. It requires the reviewed source SHA-256; an official revision fails with an explicit snapshot-review message. Raw stays ignored. Cross-OS CSV/PNG byte equality is not required.
+- CI checks committed receipts and focused offline tests/full frozen replay, plus a separate **Linux live-download/full-refit job that runs `src/verify.py`**. It requires the reviewed source SHA-256; an official revision fails with an explicit snapshot-review message. The live raw cache stays ignored; the licensed historical archive is packaged separately. Cross-OS CSV/PNG byte equality is not required.
 - Figures enforce ≥40px text margins, clipping/overlap checks and partial-regression identity. Original six-theme visual review was on 2026-10-04; refreshed renders pass executable QA and repeat hashes, but fresh visual inspection is pending because the image-analysis service was unavailable. [Verification scope](docs/verification.md).
 
 ### Limits — what this file cannot say
@@ -111,6 +111,7 @@ else
 fi
 uv pip install -r requirements.txt
 python src/download.py
+python -c "import json; from pathlib import Path; expected=json.loads(Path('outputs/source_snapshot.json').read_text())['sha256']; got=json.loads(Path('data/raw/pull_manifest.json').read_text())['sha256']; assert got == expected, 'Official HDB snapshot changed; review refresh separately before staging'"
 python src/build_dataset.py
 python src/analysis.py
 python src/figures.py
@@ -120,6 +121,8 @@ python src/verify.py
 # Local dependency-backed figure mirror/rollback check (not the offline CI suite):
 python tests/check_figure_publish.py
 ```
+
+**Frozen offline replay:** after the same environment setup, replace `python src/download.py` with `python src/download.py --replay`, keep the **before-staging** source check, and run the remaining commands unchanged. Then run `python src/verify.py --compare-reviewed` for all twelve tables. The [licensed 3.2 MB package](data/snapshots/README.md) retains the exact historical CSV, manifests and expected outputs; it does not refresh official data or silently overwrite changed input.
 
 If `uv` is missing: `pip install uv`. Then rerun from `uv venv`.
 
