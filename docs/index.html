@@ -118,6 +118,7 @@ else
 fi
 uv pip install -r requirements.txt
 python src/download.py
+python -c "import json; from pathlib import Path; expected=json.loads(Path('outputs/source_snapshot.json').read_text())['sha256']; got=json.loads(Path('data/raw/pull_manifest.json').read_text())['sha256']; assert got == expected, 'Official HDB snapshot changed; review refresh separately before staging'"
 python src/build_dataset.py
 python src/analysis.py
 python src/figures.py
@@ -126,6 +127,7 @@ python tests/smoke_test.py
 python src/verify.py
 # Local dependency-backed figure mirror/rollback check:
 python tests/check_figure_publish.py</code></pre>
+<p class="cap"><b>Frozen offline replay:</b> replace the download command with <code>python src/download.py --replay</code>, retain the before-staging source lock and run the remaining stages unchanged. Finish with <code>python src/verify.py --compare-reviewed</code> to compare all twelve tables. The <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/data/snapshots/README.md">licensed historical replay archive</a> retains the exact original source and expected CSVs; it is not a refresh. Annual model populations, including the previous-year and strict-filter variants, must contain all twelve months. Analysis, verification and figures reject raw/stage identity differences before consuming artifacts; identical-byte repull timestamps are allowed.</p>
 <p class="cap">If <code>uv</code> is missing: <code>pip install uv</code>. Then rerun from <code>uv venv</code>.</p>
 <p class="cap">Pinned environment: Python 3.12.10 / DuckDB 1.5.6 / NumPy 2.5.3 / matplotlib 3.11.2, bundled fonts. Spot-check <code>group_summaries.csv</code>: 2025 all-type medians 1.1984156885 / 0.6892626164; 4-room 1.1967679273 / 0.6745169870, absolute tolerance 1e-9. OLS text can differ in the last digits across operating systems; cross-OS PNG byte equality is not required. Sengkang 70–&lt;75: n=152 / S$6,112.86 per m².</p>
 <p class="cap">A live source revision changes the snapshot; it is not an identity claim. Unchanged input bytes and metadata preserve the reviewed committed receipt time while the ignored pull manifest records actual acquisition time. CSV/PNG repeats were verified in the same pinned environment, not cross-platform pixel equality. Figure generation stages both <code>reports/figures</code> and <code>docs/img</code> in the existing rollback batch; ordinary swap failures, not whole-pipeline crash safety. One writer required. CI covers committed-artifact smoke, focused offline tests and a Linux live-download/full-refit job including <code>src/verify.py</code>. The refit requires the reviewed source SHA-256; official revisions require review. <a href="https://github.com/faizsaifulnizam/hdb-lease-slope/blob/main/docs/verification.md">Dated verification scope</a> distinguishes the old private-archive receipt from the public repository and its reproduction checks.</p>

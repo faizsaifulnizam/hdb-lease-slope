@@ -66,6 +66,8 @@ def publish_figures(pairs):
 
 
 def main():
+    from download import validate_stage
+    validate_stage()
     featured=rows('featured_segments.csv');buckets=rows('bucket_medians.csv');slopes=rows('slopes.csv')
     year=int(featured[0]['sale_year']); manifest=json.loads((ROOT/'outputs/source_snapshot.json').read_text())
     pull=datetime.fromisoformat(manifest['retrieved_at']).astimezone(timezone(timedelta(hours=8))).date().isoformat()

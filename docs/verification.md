@@ -19,8 +19,18 @@ Same-environment repeat builds have reproduced the reviewed CSV/PNG bytes. **Cro
 ## CI coverage
 
 - **Smoke:** stdlib parser/cache/rollback checks, headline-roundoff regression and committed-artifact ledger/transformation checks.
-- **Focused offline:** DuckDB staging and NumPy OLS/HC3 tests, plus the same headline regression. Synthetic data are tests only.
-- **Linux live refit:** fresh `uv` environment and pinned dependency setup; official download; reviewed source SHA-256 guard; staging, analysis, all six theme figures, focused tests, smoke, `src/verify.py` and the figure mirror/rollback check. This job intentionally fails with a snapshot-review message if the official file changes. Raw is ignored, not vendored. It does not require Windows-produced CSV/PNG bytes to match Linux.
+- **Focused offline:** DuckDB staging and NumPy OLS/HC3 tests, plus the same headline regression. The licensed frozen archive now supports a full offline stage/refit/render and twelve-table receipt comparison before the consumer regressions. Synthetic mutations are tests only; expected historical outputs are authentic receipts.
+- **Linux live refit:** fresh `uv` environment and pinned dependency setup; official download; reviewed source SHA-256 guard; staging, analysis, all six theme figures, focused tests, smoke, `src/verify.py` and the figure mirror/rollback check. This job intentionally fails with a snapshot-review message if the official file changes. Live raw cache stays ignored; the separate licensed archive provides historical offline replay. It does not require Windows-produced CSV/PNG bytes to match Linux.
+
+## Local frozen replay assurance
+
+The frozen archive in [data/snapshots](../data/snapshots/README.md) preserves the exact reviewed primary bytes and all twelve CSV receipts. `download.py --replay` validates source identity before staging and refuses a changed raw workspace. Existing identical-byte cache provenance is kept rather than rewritten. The live CI source check remains before staging; a live revision still requires review.
+
+Analysis, normal verification and figures compare the validated raw descriptor with the staged source receipt before consuming artifacts; acquisition-time-only differences are allowed. This is **raw-to-stage source identity**, not a parquet tamper proof or complete analysis/figure generation manifest. Annual model populations, including the previous year and strict-filter subset, require twelve calendar months; the per-segment six-month rule is unchanged. Invalid windows preserve all seven previous analysis finals, but do not undo a staging batch that already completed.
+
+`verify.py --compare-reviewed` additionally compares complete coverage, headers, deterministic row order/multiplicity and every cell of the twelve archived tables. Count/category/identifier/blank fields are exact; named floating fields allow absolute 1e-9 or relative 1e-12 roundoff tolerance. The four original headline anchors retain their stricter absolute <1e-9 tolerance. This comparator is receipt parity, not independent model recomputation; the default verifier remains the documented sampled raw/headline/link/banner check with the new source guard.
+
+Local Windows execution reused the existing pinned environment: no new installation or fresh-setup claim. Historical numeric/artifact bytes remained unchanged in full producer replays, including all six PNGs and report/site mirrors. Public archive delivery, exact-commit hosted CI, current deployed reading surfaces, new native/macOS execution and screen-reader behavior still require separate receipts. No model estimand, uncertainty method or reviewed anchors changed.
 
 ## Reviewed source refresh — 2026-10-07
 

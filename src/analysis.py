@@ -88,6 +88,9 @@ def group_summary(rows,scope,year):
 
 
 def models(con,year,min_n=MIN_SEGMENT,min_support=MIN_SUPPORT):
+    months={r[0] for r in con.execute('SELECT DISTINCT month(sale_date) FROM sales WHERE sale_year=?',[year]).fetchall()}
+    if months!=set(range(1,13)):
+        raise ValueError(f'incomplete calendar year {year}: missing months {sorted(set(range(1,13))-months)}')
     cur=con.execute('SELECT town,flat_type,historical_group,lease_years,storey_midpoint,floor_area_sqm,month(sale_date),price_per_sqm FROM sales WHERE sale_year=? ORDER BY town,flat_type,month,block,street_name,storey_midpoint,floor_area_sqm,lease_months,resale_price',[year])
     cells=defaultdict(list)
     for town,kind,group,*values in cur.fetchall(): cells[(town,kind,group)].append(values)
@@ -101,8 +104,8 @@ def models(con,year,min_n=MIN_SEGMENT,min_support=MIN_SUPPORT):
 def main():
     import duckdb
     from artifacts import publish_paths,write_csv
-    from download import validate_cache
-    manifest=validate_cache()
+    from download import validate_stage
+    manifest=validate_stage()
     sgt=timezone(timedelta(hours=8))
     pull_year=datetime.fromisoformat(manifest['retrieved_at']).astimezone(sgt).year
     con=duckdb.connect(config={'threads':1})

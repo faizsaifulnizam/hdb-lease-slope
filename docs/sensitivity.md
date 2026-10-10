@@ -12,6 +12,8 @@ Baseline: 2025, model n≥100, lease support≥10 years, full-rank storey/area/m
 | Previous year (2024) | 1.181% | 0.706% | 1.208% | 0.650% |
 | Stricter offset 0–12 months | 1.199% | 0.691% | 1.197% | 0.675% |
 
+Annual variants require all twelve calendar months in the intended population before any analysis outputs are published, including the immediately previous year and the strict 0–12-month offset subset. Missing support raises a named year/missing-month error; it is not silently replaced with an older year. Individual town × type model cells still require only six observed months, alongside the other eligibility guards.
+
 The group-median ordering persists, but eligible-cell membership changes. n≥50 admits noisier/negative coefficients; ≥5-year support admits steeper short-support coefficients (maximum non-mature 2.64%). A stable median does not validate individual slope estimates or imply shared common support between groups. Ranges are segment heterogeneity, not confidence intervals for a group effect. There is no multiple-testing significance exercise.
 
 4-room limits differences in flat-type composition, but different towns/vintages/support still remain. No matched-block comparison or causal group test is claimed. Individual β is converted with `100*expm1(β)` **before** segment median/range computation. A one-year-shorter comparison would be `100*expm1(-β)`, not simply the negative of the displayed longer-lease percentage, and is still cross-sectional.

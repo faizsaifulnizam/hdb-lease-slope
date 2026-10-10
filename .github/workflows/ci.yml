@@ -24,7 +24,21 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version-file: .python-version
-      - run: python -m pip install duckdb==1.5.6 numpy==2.5.3
+      - run: python -m pip install -r requirements.txt
+      - name: Replay frozen source offline (identity checked before staging)
+        env:
+          MPLBACKEND: Agg
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          python src/download.py --replay
+          python src/build_dataset.py
+          python src/analysis.py
+          python src/figures.py
+          python src/verify.py --compare-reviewed
+          python tests/smoke_test.py
+          python tests/check_figure_publish.py
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
   live-refit:
     runs-on: ubuntu-latest

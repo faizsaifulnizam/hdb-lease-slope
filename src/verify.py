@@ -7,7 +7,7 @@ import statistics
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from build_dataset import parse_lease
-from download import RAW,FILE,validate_cache
+from download import RAW,FILE,validate_stage
 ROOT=Path(__file__).resolve().parents[1]
 
 
@@ -28,8 +28,44 @@ def check_group_anchors(groups, readme):
     print('HEADLINE PASS: four keyed medians, absolute tolerance 1e-9')
 
 
+def compare_reviewed():
+    import io
+    import math
+    import zipfile
+    floats=set(('median_lease_years median_price_per_sqm q25_price_per_sqm q75_price_per_sqm '
+                'lease_min_years lease_max_years mean_price_per_sqm sd_price_per_sqm beta_per_year '
+                'hc3_se ci_low_beta ci_high_beta pct_per_year ci_low_pct ci_high_pct '
+                'residual_lease_sd_years lease_control_r2 condition_number leverage_max r2 '
+                'residual_rmse_log residual_abs_p95_log residual_abs_fitted_corr '
+                'median_pct_per_year min_pct_per_year max_pct_per_year').split())
+    with zipfile.ZipFile(ROOT/'data/snapshots/reviewed-hdb.zip') as archive:
+        expected=json.loads(archive.read('pull_manifest.json'))
+        assert validate_stage()['sha256']==expected['sha256'], 'reviewed input identity differs'
+        names=sorted(n for n in archive.namelist() if n.startswith('outputs/') and n.endswith('.csv'))
+        assert {p.name for p in (ROOT/'outputs').glob('*.csv')}=={Path(n).name for n in names}, 'reviewed CSV coverage differs'
+        for name in names:
+            wanted=list(csv.reader(io.StringIO(archive.read(name).decode('utf-8'))))
+            with (ROOT/name).open(encoding='utf-8',newline='') as file: got=list(csv.reader(file))
+            message=f'reviewed CSV differs: {Path(name).name}'
+            assert len(got)==len(wanted) and got[0]==wanted[0], message
+            for actual,reference in zip(got[1:],wanted[1:]):
+                assert len(actual)==len(reference),message
+                for field,a,b in zip(wanted[0],actual,reference):
+                    if a==b: continue
+                    assert field in floats and a and b,message
+                    try: x,y=float(a),float(b)
+                    except ValueError: raise AssertionError(message)
+                    assert math.isfinite(x) and math.isfinite(y) and math.isclose(x,y,rel_tol=1e-12,abs_tol=1e-9),message
+        print('REVIEWED CSV PASS',len(names),'complete tables; abs 1e-9 / rel 1e-12 numeric tolerance')
+
+
 def main():
-    manifest=validate_cache()
+    import argparse
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--compare-reviewed',action='store_true',help='compare all 12 tables with the frozen replay receipt')
+    args=parser.parse_args()
+    manifest=validate_stage()
+    if args.compare_reviewed: compare_reviewed()
     with (RAW/FILE).open(encoding='utf-8',newline='') as f: raw=list(csv.DictReader(f))
     with (ROOT/'outputs/bucket_medians.csv').open() as f: buckets=list(csv.DictReader(f))
     for town in ['SENGKANG','TAMPINES','YISHUN']:

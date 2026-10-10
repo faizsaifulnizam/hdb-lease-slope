@@ -3,5 +3,6 @@
 *.sql text eol=lf
 *.md text eol=lf
 *.json text eol=lf
+*.zip -text
 *.png -text
 *.ttf -text

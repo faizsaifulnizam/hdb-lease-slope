@@ -52,11 +52,41 @@ def validate_cache():
     return manifest
 
 
+def validate_stage():
+    manifest=validate_cache()
+    staged=json.loads((ROOT/'outputs/source_snapshot.json').read_text(encoding='utf-8'))
+    if {k:v for k,v in manifest.items() if k!='retrieved_at'}!={k:v for k,v in staged.items() if k!='retrieved_at'}:
+        raise ValueError('raw differs from staged source; run build_dataset.py before consuming artifacts')
+    return manifest
+
+
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('--force', action='store_true')
+    ap.add_argument('--replay', action='store_true',help='restore licensed frozen source locally; never download')
     args=ap.parse_args()
     RAW.mkdir(parents=True, exist_ok=True)
+    if args.replay:
+        import zipfile
+        with zipfile.ZipFile(ROOT/'data/snapshots/reviewed-hdb.zip') as archive:
+            data=archive.read(FILE); receipt=archive.read('pull_manifest.json')
+        manifest=json.loads(receipt)
+        locked=json.loads((ROOT/'outputs/source_snapshot.json').read_text(encoding='utf-8'))['sha256']
+        if manifest['sha256']!=locked or ((RAW/FILE).exists() and hashlib.sha256((RAW/FILE).read_bytes()).hexdigest()!=locked):
+            raise ValueError('replay source lock differs; preserve changed input and review refresh separately')
+        if args.force:
+            raise ValueError('--force and --replay are separate workflows')
+        if (RAW/FILE).exists() and (RAW/'pull_manifest.json').exists():
+            print('FROZEN CACHE VERIFIED',json.dumps(validate_cache(),sort_keys=True))
+            return
+        if manifest.get('dataset_id')!=DATASET or manifest.get('file')!=FILE or any(manifest.get(k)!=v for k,v in inspect_csv(data).items()):
+            raise ValueError('frozen source differs from manifest')
+        pairs=[]
+        for name,content in [(FILE,data),('pull_manifest.json',receipt)]:
+            part=RAW/(name+'.part');part.write_bytes(content);pairs.append((part,RAW/name))
+        publish_paths(pairs)
+        print('FROZEN REPLAY VERIFIED',json.dumps(validate_cache(),sort_keys=True))
+        return
     if (RAW/FILE).exists() and (RAW/'pull_manifest.json').exists() and not args.force:
         print('CACHE VERIFIED', json.dumps(validate_cache(), sort_keys=True))
         return
