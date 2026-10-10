@@ -3,6 +3,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -41,6 +42,8 @@ jobs:
           python tests/check_figure_publish.py
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
   live-refit:
+    if: github.event_name == 'workflow_dispatch'
+    # Changing official bytes are a manual source check, not the frozen replay gate.
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
